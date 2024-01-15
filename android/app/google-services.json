@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "532839809910",
+    "project_id": "cipherschools-2a011",
+    "storage_bucket": "cipherschools-2a011.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:532839809910:android:1a366e2e41c9d9b2327057",
+        "android_client_info": {
+          "package_name": "com.example.cipher_schools"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5T7pijFBoI56hF7fQMczyXj-z0JEvoXI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
