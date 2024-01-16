@@ -228,31 +228,34 @@ class profile_row extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            width: getHorizontalSize(32),
-            height: getVerticalSize(32),
-            decoration: ShapeDecoration(
-              image: DecorationImage(
-                image: AssetImage(ImageConstant.imgprofilepic),
-                fit: BoxFit.fill,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
-              ),
-              shadows: [
-                BoxShadow(
-                  color: Color(0xFFAD00FF),
-                  blurRadius: 0,
-                  offset: Offset(0, 0),
-                  spreadRadius: 3,
+          InkWell(
+            onTap: () {},
+            child: Container(
+              width: getHorizontalSize(32),
+              height: getVerticalSize(32),
+              decoration: ShapeDecoration(
+                image: DecorationImage(
+                  image: AssetImage(ImageConstant.imgprofilepic),
+                  fit: BoxFit.fill,
                 ),
-                BoxShadow(
-                  color: Color(0xFFF5F5F5),
-                  blurRadius: 0,
-                  offset: Offset(0, 0),
-                  spreadRadius: 2,
-                )
-              ],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                shadows: [
+                  BoxShadow(
+                    color: Color(0xFFAD00FF),
+                    blurRadius: 0,
+                    offset: Offset(0, 0),
+                    spreadRadius: 3,
+                  ),
+                  BoxShadow(
+                    color: Color(0xFFF5F5F5),
+                    blurRadius: 0,
+                    offset: Offset(0, 0),
+                    spreadRadius: 2,
+                  )
+                ],
+              ),
             ),
           ),
           Container(

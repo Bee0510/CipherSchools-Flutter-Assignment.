@@ -49,7 +49,10 @@ class _profile_pageState extends State<profile_page> {
                       ),
                       child: InkWell(
                         onTap: () async {
-                          await _auth.signOutFromGoogle();
+                          if (i == 3) {
+                            await _auth.signOutFromGoogle();
+                          } else
+                            null;
                         },
                         child: Container(
                           width: getSize(336),

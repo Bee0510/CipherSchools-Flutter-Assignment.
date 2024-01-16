@@ -118,7 +118,12 @@ class _HomeScreenState extends State<home_screen> {
   void showPopupMenu() {
     showMenu<String>(
       context: context,
-      position: RelativeRect.fromLTRB(250, 590, 140, 70),
+      position: RelativeRect.fromLTRB(
+        getHorizontalSize(250),
+        getVerticalSize(590),
+        getHorizontalSize(140),
+        getVerticalSize(70),
+      ),
       items: [
         PopupMenuItem<String>(
           child: Center(child: Text('Income')),
