@@ -1,4 +1,4 @@
-CipherSchool Expense Tracking App
+###CipherSchool Expense Tracking App
 Overview
 Welcome to CipherSchool, your personal expense tracking app! CipherSchool is designed to help you easily track and manage your expenses, providing a user-friendly interface and robust features to keep your financial life organized. Whether you're a student, professional, or anyone looking to gain better control over their finances, CipherSchool is here to simplify your expense tracking process.
 
