@@ -2,9 +2,11 @@
 
 import 'dart:async';
 import 'dart:math';
+import 'package:cipher_schools/screens/Home_screen/home_screen.dart';
 import 'package:cipher_schools/screens/getting_started/getting_started.dart';
 import 'package:cipher_schools/utils/color_constant.dart';
 import 'package:cipher_schools/utils/size_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,12 +18,20 @@ class splash_screen extends StatefulWidget {
 }
 
 class _splash_screenState extends State<splash_screen> {
+  final user = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
-    Timer(Duration(seconds: 5), () {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => getting_started()));
-    });
+    if (user != null) {
+      Timer(Duration(seconds: 3), () {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => home_screen()));
+      });
+    } else {
+      Timer(Duration(seconds: 3), () {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => getting_started()));
+      });
+    }
     super.initState();
   }
 
@@ -32,21 +42,21 @@ class _splash_screenState extends State<splash_screen> {
       body: Stack(
         children: <Widget>[
           Positioned(
-            bottom: 629,
-            left: 203,
+            bottom: getVerticalSize(609),
+            left: getHorizontalSize(203),
             child: Image.asset(
               'assets/image/ringhtopcorner.png',
-              width: 250,
-              height: 250,
+              width: getSize(250),
+              height: getSize(250),
             ),
           ),
           Positioned(
-            top: 666,
-            right: 218,
+            top: getVerticalSize(666),
+            right: getHorizontalSize(218),
             child: Image.asset(
               'assets/image/leftbottomcorner.png',
-              width: 250,
-              height: 250,
+              width: getSize(250),
+              height: getSize(250),
             ),
           ),
           Positioned(
@@ -54,28 +64,28 @@ class _splash_screenState extends State<splash_screen> {
             left: getFontSize(150),
             child: Image.asset(
               'assets/image/icon.png',
-              width: 112,
-              height: 112,
+              width: getSize(112),
+              height: getSize(112),
             ),
           ),
           Positioned(
-            top: 760,
-            right: 311,
+            top: getVerticalSize(760),
+            right: getHorizontalSize(311),
             child: Image.asset(
               'assets/image/centerbottom.png',
-              width: 112,
-              height: 112,
+              width: getSize(112),
+              height: getSize(112),
             ),
           ),
           Positioned(
-            bottom: 730,
-            left: 304,
+            bottom: getVerticalSize(730),
+            left: getHorizontalSize(304),
             child: Transform.rotate(
               angle: pi,
               child: Image.asset(
                 'assets/image/centerbottom.png',
-                width: 112,
-                height: 112,
+                width: getSize(112),
+                height: getSize(112),
               ),
             ),
           ),
@@ -83,8 +93,8 @@ class _splash_screenState extends State<splash_screen> {
             top: getSize(436),
             left: getFontSize(89),
             child: SizedBox(
-              width: 234,
-              height: 43,
+              width: getSize(234),
+              height: getSize(43),
               child: Text(
                 'CipherX',
                 textAlign: TextAlign.center,
@@ -99,11 +109,11 @@ class _splash_screenState extends State<splash_screen> {
             ),
           ),
           Positioned(
-              top: 736,
-              left: 127,
+              top: getVerticalSize(736),
+              left: getHorizontalSize(127),
               child: Container(
-                width: 158,
-                height: 48,
+                width: getSize(158),
+                height: getSize(48),
                 child: Text.rich(
                   TextSpan(
                     children: [

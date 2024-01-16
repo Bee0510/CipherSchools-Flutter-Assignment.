@@ -11,7 +11,9 @@ class _budget_pageState extends State<budget_page> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('wfewvvjwev'),
+      child: Center(
+        child: Text('Budget Page coming soon'),
+      ),
     );
   }
 }

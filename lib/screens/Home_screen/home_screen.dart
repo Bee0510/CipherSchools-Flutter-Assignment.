@@ -2,11 +2,12 @@
 
 import 'package:cipher_schools/screens/Home_screen/pages/budget_page.dart';
 import 'package:cipher_schools/screens/Home_screen/pages/home_page/home_page.dart';
-import 'package:cipher_schools/screens/Home_screen/pages/profile_page.dart';
+import 'package:cipher_schools/screens/Home_screen/pages/home_page/profile_page.dart';
 import 'package:cipher_schools/screens/Home_screen/pages/transaction_page.dart';
 import 'package:cipher_schools/screens/expense_screen/expense_screen.dart';
 import 'package:cipher_schools/screens/income_screen/income_screen.dart';
 import 'package:cipher_schools/utils/image_constant.dart';
+import 'package:cipher_schools/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -59,7 +60,7 @@ class _HomeScreenState extends State<home_screen> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          height: 70,
+          height: getSize(70),
           color: Color.fromRGBO(252, 252, 252, 1),
           shape: const CircularNotchedRectangle(),
           notchMargin: 5,
@@ -78,10 +79,10 @@ class _HomeScreenState extends State<home_screen> {
                         color: selectedIndex == index
                             ? Color.fromRGBO(85, 0, 255, 1)
                             : Color.fromRGBO(198, 198, 198, 1),
-                        width: 23,
-                        height: 23,
+                        width: getSize(23),
+                        height: getSize(23),
                       ),
-                      SizedBox(height: 4),
+                      SizedBox(height: getSize(4)),
                       Text(
                         bottomNavigationBarItems[index]['label'],
                         style: GoogleFonts.inter(

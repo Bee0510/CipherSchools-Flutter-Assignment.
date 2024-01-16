@@ -9,33 +9,36 @@ class button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 343,
-      height: 56,
-      padding: const EdgeInsets.all(8),
-      decoration: ShapeDecoration(
-        color: Color(0xFF7E3DFF),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Color(0xFFFBFBFB),
-              fontSize: 18,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w600,
-              height: 0,
-            ),
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        width: 343,
+        height: 56,
+        padding: const EdgeInsets.all(8),
+        decoration: ShapeDecoration(
+          color: Color(0xFF7E3DFF),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
           ),
-        ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xFFFBFBFB),
+                fontSize: 18,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w600,
+                height: 0,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

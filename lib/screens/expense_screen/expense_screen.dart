@@ -1,8 +1,14 @@
 // ignore_for_file: camel_case_types, prefer_const_constructors
+import 'dart:async';
+
+import 'package:cipher_schools/database/database.dart';
+import 'package:cipher_schools/models/auth_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../../components/button.dart';
+import '../../utils/size_utils.dart';
 import '../income_screen/widgets/amount_input.dart';
 import '../signup_screen/widgets/signup_screen_appbar.dart';
 
@@ -14,6 +20,7 @@ class expense_screen extends StatefulWidget {
 }
 
 class _expense_screenState extends State<expense_screen> {
+  final transaction_base _database = transaction_base();
   final TextEditingController _amountComntroller = TextEditingController();
   final TextEditingController _descriptionComntroller = TextEditingController();
   final TextEditingController iconController = TextEditingController();
@@ -35,13 +42,15 @@ class _expense_screenState extends State<expense_screen> {
       walletEntries
           .add(DropdownMenuEntry<walletLabel>(value: icon, label: icon.label));
     }
+
+    final user = Provider.of<Users>(context);
     return Scaffold(
       backgroundColor: Color(0xFF0077FF),
       body: SafeArea(
         child: Stack(
           children: <Widget>[
             Positioned(
-              top: 30,
+              top: getVerticalSize(30),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: signup_screen_appbar(
@@ -51,8 +60,8 @@ class _expense_screenState extends State<expense_screen> {
               ),
             ),
             Positioned(
-              top: 228,
-              left: 24,
+              top: getVerticalSize(228),
+              left: getHorizontalSize(24),
               child: Container(
                 child: Text(
                   'How much?',
@@ -66,8 +75,8 @@ class _expense_screenState extends State<expense_screen> {
               ),
             ),
             Positioned(
-              top: 263,
-              left: 24,
+              top: getVerticalSize(263),
+              left: getHorizontalSize(24),
               child: Text(
                 '₹',
                 style: GoogleFonts.inter(
@@ -80,11 +89,11 @@ class _expense_screenState extends State<expense_screen> {
             ),
             amount_input(amountComntroller: _amountComntroller),
             Positioned(
-              top: 369,
+              top: getVerticalSize(369),
               left: 4,
               right: 4,
               child: Container(
-                height: 320,
+                height: getVerticalSize(320),
                 decoration: ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
@@ -96,14 +105,14 @@ class _expense_screenState extends State<expense_screen> {
                 ),
                 child: Center(
                   child: Container(
-                    height: 272,
-                    width: 343,
+                    height: getVerticalSize(272),
+                    width: getHorizontalSize(343),
                     child: Column(
                       children: [
                         // Catagory
                         DropdownMenu<catagoryLabel>(
                           controller: iconController,
-                          width: 343,
+                          width: getHorizontalSize(343),
                           enableFilter: true,
                           label: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -154,10 +163,10 @@ class _expense_screenState extends State<expense_screen> {
                             });
                           },
                         ),
-                        SizedBox(height: 16),
+                        SizedBox(height: getVerticalSize(16)),
                         //Description
                         Container(
-                          height: 56,
+                          height: getVerticalSize(56),
                           child: TextFormField(
                             controller: _descriptionComntroller,
                             keyboardType: TextInputType.text,
@@ -196,11 +205,11 @@ class _expense_screenState extends State<expense_screen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 16),
+                        SizedBox(height: getVerticalSize(16)),
                         //Wallet
                         DropdownMenu<walletLabel>(
                           controller: walletController,
-                          width: 343,
+                          width: getHorizontalSize(343),
                           enableFilter: true,
                           label: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -258,15 +267,46 @@ class _expense_screenState extends State<expense_screen> {
               ),
             ),
             Positioned(
-                top: 690,
-                left: 4,
-                right: 4,
+                top: getVerticalSize(690),
+                left: getHorizontalSize(4),
+                right: getHorizontalSize(4),
                 child: Container(
                   width: 375,
-                  height: 88,
+                  height: 94,
                   decoration: BoxDecoration(color: Colors.white),
                   child: Center(
-                    child: button(onPressed: () {}, title: 'Continue'),
+                    child: button(
+                        onPressed: () async {
+                          try {
+                            if (_amountComntroller.text.isEmpty ||
+                                catagorySelect == null ||
+                                walletSelect == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Please fill all the fields'),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                              return;
+                            }
+                            await _database.incomeRequest(
+                              user,
+                              _amountComntroller.text,
+                              _descriptionComntroller.text,
+                              catagorySelect!.label,
+                              walletSelect!.label,
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Processing Data')),
+                            );
+                            Timer(Duration(seconds: 1), () {
+                              Navigator.pop(context);
+                            });
+                          } catch (e) {
+                            print("Firestore Error: $e");
+                          }
+                        },
+                        title: 'Continue'),
                   ),
                 ))
           ],

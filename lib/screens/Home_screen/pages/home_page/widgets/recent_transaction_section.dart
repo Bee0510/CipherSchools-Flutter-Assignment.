@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cipher_schools/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,7 +12,7 @@ class recent_transaction_section extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56,
+      height: getVerticalSize(56),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(color: Colors.white),
       child: Row(
@@ -42,8 +43,8 @@ class recent_transaction_section extends StatelessWidget {
                   ),
                   SizedBox(width: 10),
                   Container(
-                    width: 78,
-                    height: 32,
+                    // width: getHorizontalSize(78),
+                    // height: getHorizontalSize(32),
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: ShapeDecoration(

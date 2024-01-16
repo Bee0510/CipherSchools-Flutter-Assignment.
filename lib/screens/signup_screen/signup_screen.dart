@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_final_fields, library_private_types_in_public_api, prefer_const_constructors
 
 import 'package:cipher_schools/components/button.dart';
+import 'package:cipher_schools/database/user_info.dart';
+import 'package:cipher_schools/models/auth_model.dart';
 import 'package:cipher_schools/screens/signup_screen/widgets/google_signup_button.dart';
-import 'package:cipher_schools/utils/size_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../auth/auth.dart';
 import 'widgets/signup_screen_appbar.dart';
 
@@ -20,9 +23,11 @@ class _SignUpPageState extends State<Signup_screen> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   bool _isTermsChecked = false;
+  final user_base _userbase = user_base();
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<Users?>(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -91,7 +96,27 @@ class _SignUpPageState extends State<Signup_screen> {
                   ],
                 ),
                 SizedBox(height: 27.0),
-                button(onPressed: () {}, title: 'Sign Up'),
+                button(
+                    onPressed: () async {
+                      try {
+                        if (_formKey.currentState!.validate()) {
+                          await _authentication.RegisterTHroughEmail(
+                              _emailController.text, _passwordController.text);
+                          User? user = FirebaseAuth.instance.currentUser;
+                          if (user != null) {
+                            await _userbase.saveInfo(
+                              Users(uid: user.uid),
+                              _nameController.text,
+                              _emailController.text,
+                              _passwordController.text,
+                            );
+                          }
+                        }
+                      } catch (e) {
+                        print(e.toString());
+                      }
+                    },
+                    title: 'Sign Up'),
                 SizedBox(height: 12.0),
                 Container(
                   height: 18,

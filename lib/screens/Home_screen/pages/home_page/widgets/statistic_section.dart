@@ -1,19 +1,61 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:cipher_schools/database/fetchTransaction.dart';
 import 'package:cipher_schools/utils/image_constant.dart';
+import 'package:cipher_schools/utils/size_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../../../models/database_model.dart';
 
-class statistic_section extends StatelessWidget {
+class statistic_section extends StatefulWidget {
   const statistic_section({
     super.key,
   });
 
   @override
+  State<statistic_section> createState() => _statistic_sectionState();
+}
+
+class _statistic_sectionState extends State<statistic_section> {
+  final getTransaction confirm = getTransaction();
+  List<transaction> transactions = [];
+  int totalIncome = 0;
+  int totalExpense = 0;
+  final data = FirebaseAuth.instance.currentUser;
+
+  Future<void> loadTransactions() async {
+    try {
+      List<transaction> loadedTransactions =
+          await confirm.getPendingConfirmation(data!.uid);
+      loadedTransactions.sort((a, b) => b.date.compareTo(a.date));
+      int totalInmoney = loadedTransactions
+          .where((transaction) => transaction.type == 'Income')
+          .fold(0, (sum, transaction) => sum + int.parse(transaction.amount));
+      int totalOutmoney = loadedTransactions
+          .where((transaction) => transaction.type == 'Expense')
+          .fold(0, (sum, transaction) => sum + int.parse(transaction.amount));
+      setState(() {
+        transactions = loadedTransactions;
+        totalIncome = totalInmoney;
+        totalExpense = totalOutmoney;
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  @override
+  void initState() {
+    loadTransactions();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      height: 268,
+      height: getVerticalSize(312),
       decoration: ShapeDecoration(
         gradient: LinearGradient(
           begin: Alignment(-0.06, -1.00),
@@ -30,12 +72,12 @@ class statistic_section extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            SizedBox(height: 12),
+            SizedBox(height: getVerticalSize(12)),
             //profile row
             profile_row(),
             //account Balance
             account_balance(),
-            SizedBox(height: 27),
+            SizedBox(height: getVerticalSize(27)),
             //Income and Expense
             Container(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -45,14 +87,15 @@ class statistic_section extends StatelessWidget {
                   income_dispay_widget(
                     img: ImageConstant.imgincome,
                     text: 'Income',
-                    amount: '₹50000',
+                    amount: '₹' + totalIncome.toString(),
                     color: Color(0xFF00A86B),
                   ),
                   income_dispay_widget(
-                      img: ImageConstant.imgexpense,
-                      text: 'Expense',
-                      amount: '₹43000',
-                      color: Color(0xFFFD3C4A)),
+                    img: ImageConstant.imgexpense,
+                    text: 'Expense',
+                    amount: '₹' + totalExpense.toString(),
+                    color: Color(0xFFFD3C4A),
+                  ),
                 ],
               ),
             )
@@ -80,8 +123,8 @@ class income_dispay_widget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 16, top: 18, bottom: 14, right: 11),
-      width: 170,
-      height: 80,
+      width: getHorizontalSize(170),
+      height: getVerticalSize(80),
       decoration: ShapeDecoration(
         color: color,
         shape: RoundedRectangleBorder(
@@ -92,8 +135,8 @@ class income_dispay_widget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            width: 48,
-            height: 48,
+            width: getHorizontalSize(48),
+            height: getVerticalSize(48),
             decoration: ShapeDecoration(
               color: Color(0xFFFBFBFB),
               shape: RoundedRectangleBorder(
@@ -102,29 +145,32 @@ class income_dispay_widget extends StatelessWidget {
             ),
             child: Center(child: SvgPicture.asset(img)),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                text,
-                style: GoogleFonts.inter(
-                  color: Color(0xFFFBFBFB),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  height: 0,
+          Container(
+            width: getHorizontalSize(85),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  text,
+                  style: GoogleFonts.inter(
+                    color: Color(0xFFFBFBFB),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    height: 0,
+                  ),
                 ),
-              ),
-              Text(
-                amount,
-                style: GoogleFonts.inter(
-                  color: Color(0xFFFBFBFB),
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                  height: 0,
-                ),
-              )
-            ],
+                Text(
+                  amount,
+                  style: GoogleFonts.inter(
+                    color: Color(0xFFFBFBFB),
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
+                    height: 0,
+                  ),
+                )
+              ],
+            ),
           )
         ],
       ),
@@ -140,7 +186,7 @@ class account_balance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 64,
+      height: getVerticalSize(64),
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -177,17 +223,17 @@ class profile_row extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 64,
+      height: getVerticalSize(64),
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            width: 32,
-            height: 32,
+            width: getHorizontalSize(32),
+            height: getVerticalSize(32),
             decoration: ShapeDecoration(
               image: DecorationImage(
-                image: NetworkImage("https://via.placeholder.com/32x32"),
+                image: AssetImage(ImageConstant.imgprofilepic),
                 fit: BoxFit.fill,
               ),
               shape: RoundedRectangleBorder(
@@ -211,15 +257,15 @@ class profile_row extends StatelessWidget {
           ),
           Container(
             padding: EdgeInsets.all(8),
-            width: 107,
-            height: 40,
+            width: getHorizontalSize(107),
+            height: getVerticalSize(40),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 SvgPicture.asset(
                   ImageConstant.imgarrowdown2,
-                  width: 14.15,
-                  height: 7,
+                  width: getHorizontalSize(14),
+                  height: getVerticalSize(7),
                 ),
                 Text(
                   'October',
@@ -234,13 +280,13 @@ class profile_row extends StatelessWidget {
             ),
           ),
           Container(
-              width: 32,
-              height: 32,
+              width: getHorizontalSize(32),
+              height: getHorizontalSize(32),
               child: SvgPicture.asset(
                 ImageConstant.imgnotification,
                 fit: BoxFit.contain,
-                width: 16,
-                height: 16,
+                width: getHorizontalSize(16),
+                height: getHorizontalSize(16),
               ))
         ],
       ),

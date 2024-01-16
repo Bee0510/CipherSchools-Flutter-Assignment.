@@ -1,3 +1,4 @@
+import 'package:cipher_schools/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,8 +13,8 @@ class amount_input extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 250,
-      left: 65,
+      top: getVerticalSize(250),
+      left: getHorizontalSize(65),
       child: Container(
         width: double.maxFinite,
         color: Colors.amber,
@@ -36,9 +37,6 @@ class amount_input extends StatelessWidget {
             fontWeight: FontWeight.w600,
             height: 0,
           ),
-          onChanged: (value) {
-            // You can add any logic here if needed
-          },
         ),
       ),
     );

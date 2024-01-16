@@ -4,8 +4,6 @@ import 'dart:math';
 import 'package:cipher_schools/utils/color_constant.dart';
 import 'package:cipher_schools/utils/size_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import 'widgets/welcome_widget.dart';
 
 class getting_started extends StatefulWidget {
@@ -28,8 +26,8 @@ class _splash_screenState extends State<getting_started> {
       body: Stack(
         children: <Widget>[
           Positioned(
-            bottom: 629,
-            left: 203,
+            bottom: getVerticalSize(609),
+            left: getHorizontalSize(203),
             child: Image.asset(
               'assets/image/ringhtopcorner.png',
               width: 250,
@@ -37,12 +35,12 @@ class _splash_screenState extends State<getting_started> {
             ),
           ),
           Positioned(
-            top: 666,
-            right: 218,
+            top: getVerticalSize(666),
+            right: getHorizontalSize(218),
             child: Image.asset(
               'assets/image/leftbottomcorner.png',
-              width: 250,
-              height: 250,
+              width: getSize(250),
+              height: getFontSize(250),
             ),
           ),
           Positioned(
@@ -55,23 +53,23 @@ class _splash_screenState extends State<getting_started> {
             ),
           ),
           Positioned(
-            top: 760,
-            right: 311,
+            top: getVerticalSize(760),
+            right: getHorizontalSize(311),
             child: Image.asset(
               'assets/image/centerbottom.png',
-              width: 112,
-              height: 112,
+              width: getSize(112),
+              height: getSize(112),
             ),
           ),
           Positioned(
-            bottom: 730,
-            left: 304,
+            bottom: getVerticalSize(730),
+            left: getHorizontalSize(304),
             child: Transform.rotate(
               angle: pi,
               child: Image.asset(
                 'assets/image/centerbottom.png',
-                width: 112,
-                height: 112,
+                width: getSize(112),
+                height: getSize(112),
               ),
             ),
           ),

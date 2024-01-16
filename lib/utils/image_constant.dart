@@ -24,4 +24,7 @@ class ImageConstant {
   static String imgsettings = 'assets/image/settings.svg';
   static String imguplaod = 'assets/image/upload.svg';
   static String imgwallet = 'assets/image/wallet 3.svg';
+  static String imgtravel = 'assets/image/Travel.svg';
+  static String imgfood = 'assets/image/Food.svg';
+  static String imgsubscription = 'assets/image/subscription.svg';
 }

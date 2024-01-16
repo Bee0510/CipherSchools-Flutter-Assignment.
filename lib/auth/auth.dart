@@ -1,7 +1,7 @@
 // ignore_for_file: unused_element, non_constant_identifier_names, unused_field, unnecessary_null_comparison, empty_catches, avoid_print, unused_local_variable, body_might_complete_normally_nullable
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'auth_model.dart';
+import '../models/auth_model.dart';
 
 class Authentication {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -18,7 +18,6 @@ class Authentication {
       UserCredential Result = await _auth.createUserWithEmailAndPassword(
           email: Email, password: Password);
       User? users = Result.user;
-
       return _FromFirebaseUser(users);
     } catch (e) {
       print(e.toString());
@@ -31,7 +30,6 @@ class Authentication {
       UserCredential Result = await _auth.signInWithEmailAndPassword(
           email: Email, password: Password);
       User? users = Result.user;
-
       return _FromFirebaseUser(users);
     } catch (e) {
       print(e.toString());

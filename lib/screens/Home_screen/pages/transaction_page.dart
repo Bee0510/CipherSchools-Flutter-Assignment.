@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class transaction_page extends StatefulWidget {
@@ -12,7 +14,9 @@ class _transaction_pageState extends State<transaction_page> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Text('Transaction Page'),
+        child: Center(
+          child: Text('Transaction Page coming soon'),
+        ),
       ),
     );
   }

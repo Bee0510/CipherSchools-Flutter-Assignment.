@@ -2,6 +2,7 @@
 
 import 'package:cipher_schools/auth/auth.dart';
 import 'package:cipher_schools/utils/image_constant.dart';
+import 'package:cipher_schools/utils/size_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,13 +32,13 @@ class _profile_pageState extends State<profile_page> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: <Widget>[
-            SizedBox(height: 30),
+            SizedBox(height: getSize(30)),
             profile_section(),
-            SizedBox(height: 40),
+            SizedBox(height: getSize(30)),
             //Listview
             Container(
-              width: 336,
-              height: 356,
+              width: getSize(336),
+              height: getSize(356),
               child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: 4,
@@ -51,8 +52,8 @@ class _profile_pageState extends State<profile_page> {
                           await _auth.signOutFromGoogle();
                         },
                         child: Container(
-                          width: 336,
-                          height: 89,
+                          width: getSize(336),
+                          height: getSize(89),
                           padding: EdgeInsets.only(
                             top: 18,
                             bottom: 19,
@@ -78,8 +79,8 @@ class _profile_pageState extends State<profile_page> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                width: 52,
-                                height: 52,
+                                width: getSize(52),
+                                height: getSize(52),
                                 padding: const EdgeInsets.all(10),
                                 decoration: ShapeDecoration(
                                   color: Color(0xFFEEE5FF),
@@ -89,8 +90,8 @@ class _profile_pageState extends State<profile_page> {
                                 ),
                                 child: SvgPicture.asset(
                                   dataList[i]["icon"],
-                                  width: 32,
-                                  height: 32,
+                                  width: getSize(32),
+                                  height: getSize(32),
                                 ),
                               ),
                               SizedBox(width: 9),
@@ -137,13 +138,13 @@ class profile_section extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      height: getVerticalSize(80),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 80,
-            height: 80,
+            width: getHorizontalSize(80),
+            height: getVerticalSize(80),
             decoration: ShapeDecoration(
               image: DecorationImage(
                 image: AssetImage(ImageConstant.imgprofilepic),
@@ -152,26 +153,12 @@ class profile_section extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50),
               ),
-              shadows: [
-                BoxShadow(
-                  color: Color(0xFFAD00FF),
-                  blurRadius: 0,
-                  offset: Offset(0, 0),
-                  spreadRadius: 6,
-                ),
-                BoxShadow(
-                  color: Color(0xFFF5F5F5),
-                  blurRadius: 0,
-                  offset: Offset(0, 0),
-                  spreadRadius: 4,
-                )
-              ],
             ),
           ),
-          SizedBox(width: 19),
+          // SizedBox(width: getHorizontalSize(19)),
           Container(
-            height: 50,
-            width: 180,
+            height: getVerticalSize(50),
+            width: getHorizontalSize(200),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,7 +182,7 @@ class profile_section extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(width: 20),
+          SizedBox(width: getVerticalSize(20)),
           Container(
             child: IconButton(
               onPressed: () {},
